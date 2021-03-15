@@ -14,7 +14,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation gradleApi()
     compileOnly "com.android.tools.build:gradle:$android_tools_version"
-    implementation "com.google.code.gson:gson:2.8.5"
+    implementation "com.google.code.gson:gson:$gson_version"
     implementation project(':lancet-weaver')
     testImplementation gradleTestKit()
     testImplementation 'junit:junit:4.13.2'

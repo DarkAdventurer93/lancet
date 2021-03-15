@@ -14,9 +14,10 @@ Lancet 是一个轻量级Android AOP框架。
 在根目录的 build.gradle 添加:
 
 dependencies {
-    classpath 'com.android.tools.build:gradle:3.5.4'
-    classpath 'com.hairysnow.lancet:lancet-plugin:1.0.0'
+classpath 'com.android.tools.build:gradle:3.5.4'
+classpath 'com.hairysnow.lancet:lancet-plugin:1.0.0'
 }
+
 注意: Lancet 1.0.0 及以上版本只支持 gradle 3.3.2 及以上版本。
 
 在 app 目录的'build.gradle' 添加：
@@ -24,7 +25,7 @@ dependencies {
 apply plugin: 'com.hairysnow.lancet'
 
 dependencies {
-    provided 'com.hairysnow.lancet:lancet-base:1.0.0'
+provided 'com.hairysnow.lancet:lancet-base:1.0.0'
 }
 示例
 Lancet 使用注解来指定代码织入的规则与位置。
@@ -34,8 +35,8 @@ Lancet 使用注解来指定代码织入的规则与位置。
 @Proxy("i")
 @TargetClass("android.util.Log")
 public static int anyName(String tag, String msg){
-    msg = msg + "lancet";
-    return (int) Origin.call();
+msg = msg + "lancet";
+return (int) Origin.call();
 }
 这里有几个关键点:
 
@@ -48,7 +49,7 @@ Origin.call() 代表了 Log.i() 这个目标方法.
 代码织入方式
 @Proxy
 public @interface Proxy {
-    String value();
+String value();
 }
 @Proxy 将使用新的方法替换代码里存在的原有的目标方法.
 比如代码里有10个地方调用了 Dog.bark(), 代理这个方法后，所有的10个地方的代码会变为_Lancet.xxxx.bark(). 而在这个新方法中会执行你在Hook方法中所写的代码.
@@ -59,8 +60,8 @@ public @interface Proxy {
 
 @Insert
 public @interface Insert {
-    String value();
-    boolean mayCreateSuper() default false;
+String value();
+boolean mayCreateSuper() default false;
 }
 @Insert 将新代码插入到目标方法原有代码前后。
 @Insert 常用于操作App与library的类，并且可以通过This操作目标类的私有属性与方法(下文将会介绍)。
@@ -70,21 +71,21 @@ public @interface Insert {
 @TargetClass(value = "android.support.v7.app.AppCompatActivity", scope = Scope.LEAF)
 @Insert(value = "onStop", mayCreateSuper = true)
 protected void onStop(){
-    System.out.println("hello world");
-    Origin.callVoid();
+System.out.println("hello world");
+Origin.callVoid();
 }
 Scope 将在后文介绍，这里的意为目标是 AppCompatActivity 的所有最终子类。
 如果一个类 MyActivity extends AppcompatActivity 没有重写 onStop 会自动创建onStop方法，而Origin在这里就代表了super.onStop(), 最后就是这样的效果：
 
 protected void onStop() {
-    System.out.println("hello world");
-    super.onStop();
+System.out.println("hello world");
+super.onStop();
 }
 Note：public/protected/private 修饰符会完全照搬 Hook 方法的修饰符。
 
 匹配目标类
 public @interface TargetClass {
-    String value();
+String value();
 
     Scope scope() default Scope.SELF;
 }
@@ -142,9 +143,9 @@ Scope.LEAF -> B D
 比如下面这个例子：
 
 public class A {
-    protected int execute(B b){
-        return b.call();
-    }
+protected int execute(B b){
+return b.call();
+}
 
     private class B {
 
@@ -157,8 +158,8 @@ public class A {
 @TargetClass("com.dieyidezui.demo.A")
 @Insert("execute")
 public int hookExecute(@ClassOf("com.dieyidezui.demo.A$B") Object o) {
-    System.out.println(o);
-    return (int) Origin.call();
+System.out.println(o);
+return (int) Origin.call();
 }
 ClassOf 的 value 一定要按照 (package_name.)(outer_class_name$)inner_class_name([]...)的模板.
 比如:
@@ -182,12 +183,12 @@ For example:
 @TargetClass("java.io.InputStream")
 @Proxy("read")
 public int read(byte[] bytes) throws IOException {
-    try {
-        return (int) Origin.<IOException>callThrowOne();
-    } catch (IOException e) {
-        e.printStackTrace();
-        throw e;
-    }
+try {
+return (int) Origin.<IOException>callThrowOne();
+} catch (IOException e) {
+e.printStackTrace();
+throw e;
+}
 }
 This
 仅用于Insert 方式的非静态方法的Hook中.(暂时)
@@ -208,7 +209,7 @@ For example:
 
 package me.ele;
 public class Main {
-    private int a = 1;
+private int a = 1;
 
     public void nothing(){
 
@@ -222,9 +223,9 @@ public class Main {
 @TargetClass("me.ele.Main")
 @Insert("nothing")
 public void testThis() {
-    Log.e("debug", This.get().getClass().getName());
-    This.putField(3, "a");
-    Origin.callVoid();
+Log.e("debug", This.get().getClass().getName());
+This.putField(3, "a");
+Origin.callVoid();
 }
 如果有关闭插件的需要，在gradle.properties中配置如下即可，不配置默认为开启插件lancet.disablePlugin = true
 Tips
