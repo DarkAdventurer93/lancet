@@ -1,0 +1,20 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+group='com.hairysnow.lancet'
+version='1.0.0'
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            //提交到远程服务器：
+            // repository(url: "http://www.xxx.com/repos") {
+            //    authentication(userName: "admin", password: "admin")
+            // }
+            //本地的Maven地址设置为D:/repos-local
+            repository(url: uri('D:/repos-local'))
+        }
+    }
+}
