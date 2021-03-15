@@ -2,6 +2,12 @@
 buildscript {
     ext {
 
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+        bintrayUser = properties.getProperty('bintrayUser')
+        bintrayKey = properties.getProperty('bintrayKey')
+        
         lancet_group = 'com.hairysnow'
         lancet_version = '1.0.0'
         //lancet_version = '0.0.1.8-SNAPSHOT'
@@ -10,6 +16,8 @@ buildscript {
         //android_tools_version = '2.4.0-alpha6'
         android_tools_version = '3.5.4'
         guava_version = '24.0'
+        okio_version = '2.8.0'
+        gson_version = '2.8.5'
     }
     repositories {
         google()
@@ -22,7 +30,7 @@ buildscript {
     }
     dependencies {
         classpath "com.android.tools.build:gradle:3.5.4"
-        
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -30,4 +38,101 @@ buildscript {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+subprojects { pro ->
+
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven {
+            url 'https://maven.google.com'
+        }
+    }
+
+    if (pro.name == 'sample-test') return
+
+    version = lancet_version
+    group = lancet_group
+
+    apply plugin: 'maven'
+    apply plugin: 'com.jfrog.bintray'
+    afterEvaluate {
+        tasks.withType(Javadoc) {
+            options.addStringOption('Xdoclint:none', '-quiet')
+            options.addStringOption('encoding', 'UTF-8')
+        }
+        task sourcesJar(type: Jar) {
+            from sourceSets.main.java.srcDirs
+            classifier = 'sources'
+        }
+
+        task javadocJar(type: Jar, dependsOn: javadoc) {
+            classifier = 'javadoc'
+            from javadoc.destinationDir
+        }
+
+        artifacts {
+            archives sourcesJar
+            archives javadocJar
+        }
+        tasks.install {
+            repositories.mavenInstaller {
+                pom {
+                    project {
+                        packaging 'jar'
+                        licenses {
+                            license {
+                                name 'The Apache Software License, Version 2.0'
+                                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                            }
+                        }
+                        developers {
+                            developer {
+                                id 'JamYin'
+                                name '银玉决'
+                                email '737338920@qq.com'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    bintray {
+        user = bintrayUser
+        key = bintrayKey
+        configurations = ['archives']
+        pkg {
+            userOrg = "hairysnow-mt-arch"
+            repo = "maven"
+            userOrg = "hairysnow-mt-arch"
+            name = pro.name    //发布到JCenter上的项目名字
+            websiteUrl = "https://github.com/HairySnow/lancet"
+            vcsUrl = "https://github.com/HairySnow/lancet.git"
+            licenses = ["Apache-2.0"]
+            publish = true
+        }
+    }
+
+}
+
+task uploadAll { task ->
+
+    task.group = 'upload'
+    gradle.projectsEvaluated {
+        println(project.tasks)
+        task.dependsOn project.tasks.clean
+        task.dependsOn project.tasks.buildEnvironment
+
+        project.tasks.buildEnvironment.mustRunAfter project.tasks.clean
+
+        project.subprojects {
+            if (it.name != 'sample-test') {
+                Task upload = it.tasks.bintrayUpload
+                task.dependsOn upload
+                upload.mustRunAfter project.tasks.buildEnvironment
+            }
+        }
+    }
 }

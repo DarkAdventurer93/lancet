@@ -12,18 +12,18 @@ repositories {
 dependencies {
     implementation project(':lancet-base')
     testImplementation "junit:junit:4.13.2"
-    testImplementation 'com.squareup.okio:okio:2.8.0'
+    testImplementation "com.squareup.okio:okio:$okio_version"
     testImplementation 'org.assertj:assertj-core:3.6.2'
 
     compileClasspath "com.android.tools.build:gradle:$android_tools_version"
     implementation project(':lancet-base')
     implementation gradleApi()
     compileClasspath "com.google.guava:guava:$guava_version"
-    compile 'org.ow2.asm:asm:6.0'
-    compile 'org.ow2.asm:asm-commons:6.0'
-    compile 'org.ow2.asm:asm-analysis:6.0'
-    compile 'org.ow2.asm:asm-util:6.0'
-    compile 'org.ow2.asm:asm-tree:6.0'
+    implementation "org.ow2.asm:asm:$asm_version"
+    implementation "org.ow2.asm:asm-commons:$asm_version"
+    implementation "org.ow2.asm:asm-analysis:$asm_version"
+    implementation "org.ow2.asm:asm-util:$asm_version"
+    implementation "org.ow2.asm:asm-tree:$asm_version"
 }
 
 sourceCompatibility = "1.8"
