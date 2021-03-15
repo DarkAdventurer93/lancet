@@ -1,0 +1,45 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+repositories {
+    google()
+    mavenCentral()
+    jcenter()
+    maven {
+        url 'https://maven.google.com/'
+        name 'Google'
+    }
+}
+dependencies {
+    implementation project(':lancet-base')
+    testImplementation "junit:junit:4.13.2"
+    testImplementation 'com.squareup.okio:okio:2.8.0'
+    testImplementation 'org.assertj:assertj-core:3.6.2'
+
+    compileClasspath "com.android.tools.build:gradle:$android_tools_version"
+    implementation project(':lancet-base')
+    implementation gradleApi()
+    compileClasspath "com.google.guava:guava:$guava_version"
+    compile 'org.ow2.asm:asm:6.0'
+    compile 'org.ow2.asm:asm-commons:6.0'
+    compile 'org.ow2.asm:asm-analysis:6.0'
+    compile 'org.ow2.asm:asm-util:6.0'
+    compile 'org.ow2.asm:asm-tree:6.0'
+}
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+group='com.hairysnow.lancet'
+version='1.0.0'
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            //提交到远程服务器：
+            // repository(url: "http://www.xxx.com/repos") {
+            //    authentication(userName: "admin", password: "admin")
+            // }
+            //本地的Maven地址设置为D:/repos-local
+            repository(url: uri('D:/repos-local'))
+        }
+    }
+}

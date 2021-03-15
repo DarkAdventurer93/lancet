@@ -1,0 +1,58 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+repositories {
+    google()
+    mavenCentral()
+    jcenter()
+    maven {
+        url 'https://maven.google.com/'
+        name 'Google'
+    }
+}
+dependencies {
+    implementation project(':lancet-base')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation gradleApi()
+    compileOnly "com.android.tools.build:gradle:$android_tools_version"
+    implementation "com.google.code.gson:gson:2.8.5"
+    implementation project(':lancet-weaver')
+    testImplementation gradleTestKit()
+    testImplementation 'junit:junit:4.13.2'
+}
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+task createClasspathManifest {
+    def outputDir = file("$buildDir/$name")
+
+    inputs.files sourceSets.main.runtimeClasspath
+    outputs.dir outputDir
+
+    doLast {
+        outputDir.mkdirs()
+        file("$outputDir/plugin-classpath.txt").text = sourceSets.main.runtimeClasspath.join("\n")
+    }
+}
+
+dependencies {
+    testRuntime files(createClasspathManifest)
+}
+
+
+//group和version在后面使用自定义插件的时候会用到
+group='com.hairysnow.lancet'
+version='1.0.0'
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            //提交到远程服务器：
+            // repository(url: "http://www.xxx.com/repos") {
+            //    authentication(userName: "admin", password: "admin")
+            // }
+            //本地的Maven地址设置为D:/repos-local
+            repository(url: uri('D:/repos-local'))
+        }
+    }
+}
