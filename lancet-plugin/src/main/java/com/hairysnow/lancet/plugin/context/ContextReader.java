@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
@@ -34,7 +35,8 @@ public class ContextReader {
     private ClassifiedContentProvider provider;
 
     /**
-     * 使用{@link Workers#INSTANCE#getDefaultExecutor()}避免task编译时的内存溢出
+     * android.build.tools: 3.5.4使用{@link Workers#INSTANCE#getDefaultExecutor()}避免task编译时的内存溢出
+     * android.build.tools: 4.0.0+使用{@link ForkJoinPool#commonPool()()}避免task编译时的内存溢出
      */
 //    private ExecutorService service = new ThreadPoolExecutor(Runtime.getRuntime().availableProcessors(), Runtime.getRuntime().availableProcessors(),
 //            0L, TimeUnit.MILLISECONDS,
@@ -70,7 +72,7 @@ public class ContextReader {
         List<Future<Void>> tasks = Stream.concat(jars.stream(), context.getAllDirs().stream())
                 .map(q -> new QualifiedContentTask(q, fetcher))
 //                .map(t -> service.submit(t))
-                .map(t -> Workers.INSTANCE.getDefaultExecutor().submit(t))
+                .map(t -> ForkJoinPool.commonPool().submit(t))
                 .collect(Collectors.toList());
         Log.w("create tasks success, use Workers.INSTANCE.getDefaultExecutor()");
         // block until all task has finish.
