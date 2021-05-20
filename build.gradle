@@ -9,12 +9,12 @@ buildscript {
         bintrayKey = properties.getProperty('bintrayKey')
         
         lancet_group = 'com.hairysnow'
-        lancet_version = '1.0.0'
+        lancet_version = '1.0.1'
         //lancet_version = '0.0.1.8-SNAPSHOT'
 
         asm_version = '6.0'
         //android_tools_version = '2.4.0-alpha6'
-        android_tools_version = '3.5.4'
+        android_tools_version = '4.0.0'
         guava_version = '24.0'
         okio_version = '2.8.0'
         gson_version = '2.8.5'
@@ -29,7 +29,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:3.5.4"
+        classpath "com.android.tools.build:gradle:4.0.0"
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
