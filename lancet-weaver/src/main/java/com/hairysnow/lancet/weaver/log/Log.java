@@ -124,8 +124,6 @@ public class Log {
         w(String.format("%s####################################################################%s",LogUI.C_BLACK_GREEN.getValue(),LogUI.E_NORMAL.getValue()));
         w(String.format("%s###                                                              ###%s",LogUI.C_BLACK_GREEN.getValue(),LogUI.E_NORMAL.getValue()));
         w(String.format("%s###                   欢迎使用 AOP 编译插件                        ###%s",LogUI.C_BLACK_GREEN.getValue(),LogUI.E_NORMAL.getValue()));
-        w(String.format("%s###                使用过程中碰到任何问题请联系我                    ###%s",LogUI.C_BLACK_GREEN.getValue(),LogUI.E_NORMAL.getValue()));
-        w(String.format("%s###                      QQ:737338920                            ###%s",LogUI.C_BLACK_GREEN.getValue(),LogUI.E_NORMAL.getValue()));
         w(String.format("%s###                      GitHub 地址：                            ###%s",LogUI.C_BLACK_GREEN.getValue(),LogUI.E_NORMAL.getValue()));
         w(String.format("%s###             https://github.com/HairySnow/lancet              ###%s",LogUI.C_BLACK_GREEN.getValue(),LogUI.E_NORMAL.getValue()));
         w(String.format("%s###                                                              ###%s",LogUI.C_BLACK_GREEN.getValue(),LogUI.E_NORMAL.getValue()));
