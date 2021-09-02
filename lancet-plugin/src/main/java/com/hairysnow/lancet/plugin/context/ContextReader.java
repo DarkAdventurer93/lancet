@@ -3,7 +3,6 @@ package com.hairysnow.lancet.plugin.context;
 import com.android.build.api.transform.JarInput;
 import com.android.build.api.transform.QualifiedContent;
 import com.android.build.api.transform.Status;
-import com.android.build.gradle.internal.tasks.Workers;
 import com.google.common.collect.ImmutableList;
 import com.hairysnow.lancet.plugin.TransformContext;
 import com.hairysnow.lancet.plugin.preprocess.ParseFailureException;
@@ -35,7 +34,6 @@ public class ContextReader {
     private ClassifiedContentProvider provider;
 
     /**
-     * android.build.tools: 3.5.4使用{@link Workers#INSTANCE#getDefaultExecutor()}避免task编译时的内存溢出
      * android.build.tools: 4.0.0+使用{@link ForkJoinPool#commonPool()()}避免task编译时的内存溢出
      */
 //    private ExecutorService service = new ThreadPoolExecutor(Runtime.getRuntime().availableProcessors(), Runtime.getRuntime().availableProcessors(),
@@ -74,7 +72,6 @@ public class ContextReader {
 //                .map(t -> service.submit(t))
                 .map(t -> ForkJoinPool.commonPool().submit(t))
                 .collect(Collectors.toList());
-        Log.w("create tasks success, use Workers.INSTANCE.getDefaultExecutor()");
         // block until all task has finish.
         for (Future<Void> future : tasks) {
             try {
@@ -113,7 +110,6 @@ public class ContextReader {
 
 
     private void shutDownAndRestart() {
-        //使用{@link Workers#INSTANCE#getDefaultExecutor()}避免task编译时的内存溢出 故这里不再调用
 //        if (lock.compareAndSet(false, true)) {
 //            service.shutdown();
 //            service = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
