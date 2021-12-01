@@ -14,18 +14,18 @@ Lancet 是一个轻量级Android AOP框架。
 在根目录的 build.gradle 添加:
 
 dependencies {
-classpath 'com.android.tools.build:gradle:3.5.4'
-classpath 'com.hairysnow.lancet:lancet-plugin:1.0.0'
+classpath 'com.android.tools.build:gradle:4.0.0'
+classpath 'com.github.HairySnow.lancet:lancet-plugin:1.0.2'
 }
 
-注意: Lancet 1.0.0 及以上版本只支持 gradle 3.3.2 及以上版本。
+注意: Lancet 1.0.2 及以上版本只支持 gradle 4.0.0 及以上版本。
 
 在 app 目录的'build.gradle' 添加：
 
 apply plugin: 'com.hairysnow.lancet'
 
 dependencies {
-provided 'com.hairysnow.lancet:lancet-base:1.0.0'
+provided 'com.github.HairySnow.lancet:lancet-base:1.0.2'
 }
 示例
 Lancet 使用注解来指定代码织入的规则与位置。
