@@ -12,7 +12,10 @@ Lancet 是一个轻量级Android AOP框架。
 开始使用
 安装
 在根目录的 build.gradle 添加:
-
+buildscript {
+repositories {
+maven { url 'https://jitpack.io' }
+}
 dependencies {
 classpath 'com.android.tools.build:gradle:4.0.0'
 classpath 'com.github.HairySnow.lancet:lancet-plugin:1.0.2'
