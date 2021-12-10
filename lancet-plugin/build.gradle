@@ -42,7 +42,7 @@ dependencies {
 
 //group和version在后面使用自定义插件的时候会用到
 group='com.hairysnow.lancet'
-version='1.0.2'
+version='1.0.3-alpha01'
 
 uploadArchives {
     repositories {
