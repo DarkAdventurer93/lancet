@@ -52,19 +52,25 @@ public class TransformContext {
         removedJars = new ArrayList<>(invocation.getInputs().size());
         allDirs = new ArrayList<>(invocation.getInputs().size());
         invocation.getInputs().forEach(it -> {
-            Log.w(it.toString());
+            Log.i(it.toString());
             it.getJarInputs().forEach(j -> {
                 allJars.add(j);
                 if (invocation.isIncremental()) {
                     switch (j.getStatus()) {
                         case ADDED:
                             addedJars.add(j);
+                            Log.w("added jar:"+j);
                             break;
                         case REMOVED:
                             removedJars.add(j);
+                            Log.w("removed jar:"+j);
                             break;
                         case CHANGED:
                             changedJars.add(j);
+                            Log.w("changed jar:"+j);
+                            break;
+                        default:
+                            break;
                     }
                 }
             });
