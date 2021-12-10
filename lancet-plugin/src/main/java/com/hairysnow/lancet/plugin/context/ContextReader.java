@@ -104,7 +104,8 @@ public class ContextReader {
         List<JarInput> jarInputs = new ArrayList<>();
         context.getChangedJars().stream()
                 .peek(c -> jarInputs.add(new StatusOverrideJarInput(context, c, Status.REMOVED)))
-                .peek(c -> jarInputs.add(new StatusOverrideJarInput(context, c, Status.ADDED)));
+                .peek(c -> jarInputs.add(new StatusOverrideJarInput(context, c, Status.ADDED)))
+                .peek(c -> jarInputs.add(new StatusOverrideJarInput(context, c, Status.CHANGED)));
         return jarInputs;
     }
 
