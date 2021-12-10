@@ -52,7 +52,7 @@ public class TransformContext {
         removedJars = new ArrayList<>(invocation.getInputs().size());
         allDirs = new ArrayList<>(invocation.getInputs().size());
         invocation.getInputs().forEach(it -> {
-            Log.d(it.toString());
+            Log.w(it.toString());
             it.getJarInputs().forEach(j -> {
                 allJars.add(j);
                 if (invocation.isIncremental()) {

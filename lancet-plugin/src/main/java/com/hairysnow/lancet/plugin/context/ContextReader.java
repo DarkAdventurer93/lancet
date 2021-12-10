@@ -17,6 +17,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -41,7 +42,6 @@ public class ContextReader {
 //            new LinkedBlockingQueue<>(), (r, executor) -> {
 //        Log.i("partial parse failed, executor has been shutdown");
 //    });
-    
     public ContextReader(TransformContext context) {
         this.context = context;
     }
@@ -102,10 +102,12 @@ public class ContextReader {
      */
     private Collection<? extends JarInput> changedToDeleteAndAdd() {
         List<JarInput> jarInputs = new ArrayList<>();
-        context.getChangedJars().stream()
-                .peek(c -> jarInputs.add(new StatusOverrideJarInput(context, c, Status.REMOVED)))
-                .peek(c -> jarInputs.add(new StatusOverrideJarInput(context, c, Status.ADDED)))
-                .peek(c -> jarInputs.add(new StatusOverrideJarInput(context, c, Status.CHANGED)));
+        context.getChangedJars().forEach(jarInput -> {
+            if (!Status.NOTCHANGED.equals(jarInput.getStatus())) {
+                Log.w("changedToDeleteAndAdd,jarInput:" + jarInput);
+                jarInputs.add(new StatusOverrideJarInput(context, jarInput, jarInput.getStatus()));
+            }
+        });
         return jarInputs;
     }
 

@@ -96,7 +96,7 @@ class LancetTransform extends Transform {
         // collect the information this compile need
         TransformContext context = new TransformContext(transformInvocation, global);
 
-        Log.i("after android plugin, incremental: " + context.isIncremental());
+        Log.w("after android plugin, incremental: " + context.isIncremental());
         Log.i("now: " + System.currentTimeMillis());
 
         boolean incremental = lancetExtension.getIncremental();
@@ -105,7 +105,7 @@ class LancetTransform extends Transform {
 
         incremental = preClassAnalysis.execute(incremental, context);
 
-        Log.i("after pre analysis, incremental: " + incremental);
+        Log.w("after pre analysis, incremental: " + incremental);
         Log.i("now: " + System.currentTimeMillis());
 
         MetaParser parser = createParser(context);
@@ -113,7 +113,7 @@ class LancetTransform extends Transform {
             incremental = false;
             context.clear();
         }
-        Log.i("after check flow, incremental: " + incremental);
+        Log.w("after check flow, incremental: " + incremental);
         Log.i("now: " + System.currentTimeMillis());
 
         context.getGraph().flow().clear();
@@ -121,7 +121,7 @@ class LancetTransform extends Transform {
 
         Weaver weaver = AsmWeaver.newInstance(transformInfo, context.getGraph());
         new ContextReader(context).accept(incremental, new TransformProcessor(context, weaver));
-        Log.i("build successfully done");
+        Log.w("build successfully done");
         Log.i("now: " + System.currentTimeMillis());
 
         cache.saveToLocal();

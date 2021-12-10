@@ -4,7 +4,7 @@ apply plugin: 'maven'
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 group='com.hairysnow.lancet'
-version='1.0.3-alpha01'
+version='1.0.3-alpha02'
 
 uploadArchives {
     repositories {
