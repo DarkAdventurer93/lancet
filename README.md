@@ -18,7 +18,7 @@ maven { url 'https://jitpack.io' }
 }
 dependencies {
 classpath 'com.android.tools.build:gradle:4.0.0'
-classpath 'com.github.HairySnow.lancet:lancet-plugin:1.0.2'
+classpath 'com.github.HairySnow.lancet:lancet-plugin:1.0.3'
 }
 
 注意: Lancet 1.0.2 及以上版本只支持 gradle 4.0.0 及以上版本。
@@ -28,7 +28,7 @@ classpath 'com.github.HairySnow.lancet:lancet-plugin:1.0.2'
 apply plugin: 'com.hairysnow.lancet'
 
 dependencies {
-provided 'com.github.HairySnow.lancet:lancet-base:1.0.2'
+provided 'com.github.HairySnow.lancet:lancet-base:1.0.3'
 }
 示例
 Lancet 使用注解来指定代码织入的规则与位置。
