@@ -68,6 +68,7 @@ public class ContextReader {
         Log.w("filter jars success");
         // accept the jar in thread pool
         List<Future<Void>> tasks = Stream.concat(jars.stream(), context.getAllDirs().stream())
+                .distinct()
                 .map(q -> new QualifiedContentTask(q, fetcher))
 //                .map(t -> service.submit(t))
                 .map(t -> ForkJoinPool.commonPool().submit(t))

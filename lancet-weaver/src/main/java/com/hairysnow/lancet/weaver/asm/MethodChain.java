@@ -295,7 +295,7 @@ public class MethodChain {
             // ret
             Type ret = Type.getReturnType(desc);
             mv.visitInsn(ret.getOpcode(Opcodes.IRETURN));
-            Log.e("visitMaxs:" + index + ", ret.size = " + ret.getSize());
+            Log.i("visitMaxs:" + index + ", ret.size = " + ret.getSize());
             mv.visitMaxs(Math.max(index, ret.getSize()), index);
             mv.visitEnd();
         };
