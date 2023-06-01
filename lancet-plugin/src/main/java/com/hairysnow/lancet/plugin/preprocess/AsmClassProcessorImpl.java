@@ -11,7 +11,7 @@ public class AsmClassProcessorImpl implements PreClassProcessor {
     @Override
     public ProcessResult process(byte[] classBytes) {
         ClassReader cr = new ClassReader(classBytes);
-        PreProcessClassVisitor cv = new PreProcessClassVisitor(Opcodes.ASM6);
+        PreProcessClassVisitor cv = new PreProcessClassVisitor(Opcodes.ASM7);
         cr.accept(cv, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
         return cv.getProcessResult();
     }

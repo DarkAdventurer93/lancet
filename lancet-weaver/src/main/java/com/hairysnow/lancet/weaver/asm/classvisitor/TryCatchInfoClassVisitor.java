@@ -41,7 +41,7 @@ public class TryCatchInfoClassVisitor extends LinkedClassVisitor {
         MethodVisitor mv = super.visitMethod(access, name, desc, signature, exceptions);
         if (matches != null && matches.size() > 0) {
             Log.tag("transform").i("visit TryCatch method: "+className+"."+name+" "+desc);
-            mv = new TryCatchMethodVisitor(Opcodes.ASM6, mv, matches);
+            mv = new TryCatchMethodVisitor(Opcodes.ASM7, mv, matches);
         }
         return mv;
     }

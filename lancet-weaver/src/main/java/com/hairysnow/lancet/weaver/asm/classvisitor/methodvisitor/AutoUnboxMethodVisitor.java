@@ -18,7 +18,7 @@ public class AutoUnboxMethodVisitor extends MethodVisitor {
     private String lastOwner;
 
     public AutoUnboxMethodVisitor(MethodVisitor methodVisitor) {
-        super(Opcodes.ASM6, methodVisitor);
+        super(Opcodes.ASM7, methodVisitor);
     }
 
     public void markBoxed() {

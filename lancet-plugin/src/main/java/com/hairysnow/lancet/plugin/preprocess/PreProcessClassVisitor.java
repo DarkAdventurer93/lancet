@@ -53,7 +53,7 @@ public class PreProcessClassVisitor extends ClassVisitor {
     public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
         entity.methods.add(new MethodEntity(access, name, desc));
         if (!isHookClass) {
-            return new MethodVisitor(Opcodes.ASM6) {
+            return new MethodVisitor(Opcodes.ASM7) {
                 @Override
                 public AnnotationVisitor visitAnnotation(String annoDesc, boolean visible) {
                     judge(annoDesc);

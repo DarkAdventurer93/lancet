@@ -15,7 +15,7 @@ public class LinkedClassVisitor extends ClassVisitor {
 
 
     public LinkedClassVisitor() {
-        super(Opcodes.ASM6);
+        super(Opcodes.ASM7);
     }
 
     public void setContext(ClassContext context) {
