@@ -14,7 +14,7 @@ uploadArchives {
             //    authentication(userName: "admin", password: "admin")
             // }
             //本地的Maven地址设置为D:/repos-local
-            repository(url: uri('D:/repos-local'))
+            repository(url: uri('E:/repos-local'))
         }
     }
 }
